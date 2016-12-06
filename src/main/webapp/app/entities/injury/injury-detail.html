@@ -1,0 +1,43 @@
+
+<div>
+    <h2><span data-translate="beakerApp.injury.detail.title">Injury</span> {{vm.injury.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="beakerApp.injury.classification">Classification</span></dt>
+        <dd>
+            <span data-translate="{{'beakerApp.Classification.' + vm.injury.classification}}">{{vm.injury.classification}}</span>
+        </dd>
+        <dt><span data-translate="beakerApp.injury.severity">Severity</span></dt>
+        <dd>
+            <span>{{vm.injury.severity}}</span>
+        </dd>
+        <dt><span data-translate="beakerApp.injury.location">Location</span></dt>
+        <dd>
+            <span>{{vm.injury.location}}</span>
+        </dd>
+        <dt><span data-translate="beakerApp.injury.inflicted">Inflicted</span></dt>
+        <dd>
+            <span>{{vm.injury.inflicted | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span data-translate="beakerApp.injury.fatal">Fatal</span></dt>
+        <dd>
+            <span>{{vm.injury.fatal}}</span>
+        </dd>
+        <dt><span data-translate="beakerApp.injury.source">Source</span></dt>
+        <dd>
+            <span>{{vm.injury.source}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="injury-detail.edit({id:vm.injury.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

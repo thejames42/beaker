@@ -1,0 +1,66 @@
+<div>
+    <h2 data-translate="beakerApp.injury.home.title">Injuries</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="injury.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="beakerApp.injury.home.createLabel">
+                        Create new Injury
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span data-translate="global.field.id">ID</span></th>
+                    <th><span data-translate="beakerApp.injury.classification">Classification</span></th>
+                    <th><span data-translate="beakerApp.injury.severity">Severity</span></th>
+                    <th><span data-translate="beakerApp.injury.location">Location</span></th>
+                    <th><span data-translate="beakerApp.injury.inflicted">Inflicted</span></th>
+                    <th><span data-translate="beakerApp.injury.fatal">Fatal</span></th>
+                    <th><span data-translate="beakerApp.injury.source">Source</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="injury in vm.injuries track by injury.id">
+                    <td><a ui-sref="injury-detail({id:injury.id})">{{injury.id}}</a></td>
+                    <td data-translate="{{'beakerApp.Classification.' + injury.classification}}">{{injury.classification}}</td>
+                    <td>{{injury.severity}}</td>
+                    <td>{{injury.location}}</td>
+                        <td>{{injury.inflicted | date:'mediumDate'}}</td>
+                    <td>{{injury.fatal}}</td>
+                    <td>{{injury.source}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="injury-detail({id:injury.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm" data-translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="injury.edit({id:injury.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="injury.delete({id:injury.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

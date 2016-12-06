@@ -1,0 +1,12 @@
+{
+    "beakerApp": {
+        "Classification" : {
+            "null": "",
+            "burn": "burn",
+            "laceration": "laceration",
+            "contusion": "contusion",
+            "concussion": "concussion",
+            "fracture": "fracture"
+        }
+    }
+}

@@ -1,0 +1,106 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myInjuryLabel" data-translate="beakerApp.injury.home.createOrEditLabel">Create or edit a Injury</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.injury.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.injury.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="beakerApp.injury.classification" for="field_classification">Classification</label>
+            <select class="form-control" name="classification" ng-model="vm.injury.classification" id="field_classification" required>
+                <option value="burn" data-translate="beakerApp.Classification.burn">burn</option>
+                <option value="laceration" data-translate="beakerApp.Classification.laceration">laceration</option>
+                <option value="contusion" data-translate="beakerApp.Classification.contusion">contusion</option>
+                <option value="concussion" data-translate="beakerApp.Classification.concussion">concussion</option>
+                <option value="fracture" data-translate="beakerApp.Classification.fracture">fracture</option>
+            </select>
+            <div ng-show="editForm.classification.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.classification.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="beakerApp.injury.severity" for="field_severity">Severity</label>
+            <input type="number" class="form-control" name="severity" id="field_severity"
+                    ng-model="vm.injury.severity"
+                    required min="1" max="10" />
+            <div ng-show="editForm.severity.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.severity.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.severity.$error.min" data-translate="entity.validation.min" translate-value-min="1">
+                    This field should be more than 1.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.severity.$error.max" data-translate="entity.validation.max" translate-value-max="10">
+                    This field cannot be more than 10.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.severity.$error.number" data-translate="entity.validation.number">
+                    This field should be a number.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="beakerApp.injury.location" for="field_location">Location</label>
+            <input type="text" class="form-control" name="location" id="field_location"
+                    ng-model="vm.injury.location"
+                    required />
+            <div ng-show="editForm.location.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.location.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="beakerApp.injury.inflicted" for="field_inflicted">Inflicted</label>
+                <div class="input-group">
+                    <input id="field_inflicted" type="text" class="form-control" name="inflicted" uib-datepicker-popup="{{dateformat}}" ng-model="vm.injury.inflicted" is-open="vm.datePickerOpenStatus.inflicted"
+                    required/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('inflicted')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+            <div ng-show="editForm.inflicted.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.inflicted.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="beakerApp.injury.fatal" for="field_fatal">Fatal</label>
+            <input type="checkbox" class="form-control" name="fatal" id="field_fatal"
+                    ng-model="vm.injury.fatal"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="beakerApp.injury.source" for="field_source">Source</label>
+            <input type="text" class="form-control" name="source" id="field_source"
+                    ng-model="vm.injury.source"
+                     />
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

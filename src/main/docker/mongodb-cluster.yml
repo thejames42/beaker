@@ -1,0 +1,17 @@
+version: '2'
+services:
+    beaker-mongodb:
+        container_name: beaker-mongodb
+        image: mongo:3.2.10
+        ports:
+            - "27017:27017"
+        command: mongos --configdb beaker-mongodb-config
+    beaker-mongodb-node:
+        build:
+            context: .
+            dockerfile: mongodb/MongoDB.Dockerfile
+        command: mongod --replSet rs1 --noprealloc --smallfiles
+    beaker-mongodb-config:
+        image: mongo:3.2.10
+        container_name: beaker-mongodb-config
+        command: mongod --noprealloc --smallfiles --configsvr --dbpath /data/db
