@@ -19,7 +19,7 @@ public interface InjuryService {
 
     /**
      *  Get all the injuries.
-     *  
+     *
      *  @return the list of entities
      */
     List<Injury> findAll();
@@ -31,6 +31,8 @@ public interface InjuryService {
      *  @return the entity
      */
     Injury findOne(String id);
+
+    List<Injury> findByLocationAndSeverity(String location, String severity);
 
     /**
      *  Delete the "id" injury.

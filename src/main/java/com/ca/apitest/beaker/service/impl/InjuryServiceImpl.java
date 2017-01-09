@@ -17,7 +17,7 @@ import java.util.List;
 public class InjuryServiceImpl implements InjuryService{
 
     private final Logger log = LoggerFactory.getLogger(InjuryServiceImpl.class);
-    
+
     @Inject
     private InjuryRepository injuryRepository;
 
@@ -35,7 +35,7 @@ public class InjuryServiceImpl implements InjuryService{
 
     /**
      *  Get all the injuries.
-     *  
+     *
      *  @return the list of entities
      */
     public List<Injury> findAll() {
@@ -56,6 +56,20 @@ public class InjuryServiceImpl implements InjuryService{
         Injury injury = injuryRepository.findOne(id);
         return injury;
     }
+
+    /**
+     *  Get all the injuries for location and severity.
+     *  @param
+     *
+     *  @return the list of entities
+     */
+    public List<Injury> findByLocationAndSeverity(String location, String severity) {
+        log.debug("Request to get all Injuries");
+        List<Injury> result = injuryRepository.findAll();
+
+        return result;
+    }
+
 
     /**
      *  Delete the  injury by id.

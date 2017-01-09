@@ -26,7 +26,7 @@ import java.util.Optional;
 public class InjuryResource {
 
     private final Logger log = LoggerFactory.getLogger(InjuryResource.class);
-        
+
     @Inject
     private InjuryService injuryService;
 
@@ -100,6 +100,20 @@ public class InjuryResource {
                 result,
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    /**
+     * GET  /injuries/location/:location/severity/:severity : get all injuries by location and severity. Currently returns all injuries.
+     *
+     * @param  location the location of the injuries to retrieve
+     * @param  severity the severity of the injuries to retrieve
+     * @return the ResponseEntity with status 200 (OK) and the list of injuries in body
+     */
+    @GetMapping("/injuries/location/{location}/severity/{severity}")
+    @Timed
+    public List<Injury> getInjuriesByLocationAndSeverity(@PathVariable String location, @PathVariable String severity) {
+        log.debug("REST request to get Injuries by location and severity : {}", location, severity);
+        return injuryService.findByLocationAndSeverity(location, severity);
     }
 
     /**
