@@ -9,12 +9,13 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing Injury.
  */
 @Service
-public class InjuryServiceImpl implements InjuryService{
+public class InjuryServiceImpl implements InjuryService {
 
     private final Logger log = LoggerFactory.getLogger(InjuryServiceImpl.class);
 
@@ -34,9 +35,9 @@ public class InjuryServiceImpl implements InjuryService{
     }
 
     /**
-     *  Get all the injuries.
+     * Get all the injuries.
      *
-     *  @return the list of entities
+     * @return the list of entities
      */
     public List<Injury> findAll() {
         log.debug("Request to get all Injuries");
@@ -46,10 +47,10 @@ public class InjuryServiceImpl implements InjuryService{
     }
 
     /**
-     *  Get one injury by id.
+     * Get one injury by id.
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity
+     * @return the entity
      */
     public Injury findOne(String id) {
         log.debug("Request to get Injury : {}", id);
@@ -58,23 +59,39 @@ public class InjuryServiceImpl implements InjuryService{
     }
 
     /**
-     *  Get all the injuries for location and severity.
-     *  @param
+     * Get all the injuries for location and severity.
      *
-     *  @return the list of entities
+     * @param
+     * @return the list of entities
      */
     public List<Injury> findByLocationAndSeverity(String location, String severity) {
-        log.debug("Request to get all Injuries");
+        log.debug("Request to get all Injuries by location and severity");
         List<Injury> result = injuryRepository.findAll();
-
-        return result;
+        List<Injury> newResult = result.stream()
+            .filter(injury -> (injury.getLocation().equalsIgnoreCase(location) && (String.valueOf(injury.getSeverity()).equalsIgnoreCase(severity))))
+            .collect(Collectors.toList());
+        return newResult;
+    }
+    /**
+     * Get all the injuries for location and severity.
+     *
+     * @param
+     * @return the list of entities
+     */
+    public List<Injury> findByLocationAndSource(String location, String source) {
+        log.debug("Request to get all Injuries by location and source");
+        List<Injury> result = injuryRepository.findAll();
+        List<Injury> newResult = result.stream()
+            .filter(injury -> (injury.getLocation().equalsIgnoreCase(location) && (String.valueOf(injury.getSource()).equalsIgnoreCase(source))))
+            .collect(Collectors.toList());
+        return newResult;
     }
 
 
     /**
-     *  Delete the  injury by id.
+     * Delete the  injury by id.
      *
-     *  @param id the id of the entity
+     * @param id the id of the entity
      */
     public void delete(String id) {
         log.debug("Request to delete Injury : {}", id);
