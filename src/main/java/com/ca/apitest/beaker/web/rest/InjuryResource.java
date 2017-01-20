@@ -119,6 +119,20 @@ public class InjuryResource {
     }
 
     /**
+     * GET  /injuries/location/:location/severity/:severity : get all injuries by location and severity. Currently returns all injuries.
+     *
+     * @param  location the location of the injuries to retrieve
+     * @param  source the source of the injuries to retrieve
+     * @return the ResponseEntity with status 200 (OK) and the list of injuries in body
+     */
+    @GetMapping("/injuries/location/{location}")
+    @Timed
+    public List<Injury> getInjuriesByIdAndLocation(@PathVariable String location, @RequestParam(value = "source") String source) {
+        log.debug("REST request to get Injuries by location and severity : {}", location, source);
+        return injuryService.findByLocationAndSource(location, source);
+    }
+
+    /**
      * DELETE  /injuries/:id : delete the "id" injury.
      *
      * @param id the id of the injury to delete

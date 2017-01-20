@@ -34,6 +34,8 @@ public interface InjuryService {
 
     List<Injury> findByLocationAndSeverity(String location, String severity);
 
+    List<Injury> findByLocationAndSource(String location, String source);
+
     /**
      *  Delete the "id" injury.
      *
