@@ -1,5 +1,6 @@
 package com.ca.apitest.beaker.web.rest;
 
+import com.ca.apitest.beaker.domain.enumeration.Classification;
 import com.codahale.metrics.annotation.Timed;
 import com.ca.apitest.beaker.domain.Injury;
 import com.ca.apitest.beaker.service.InjuryService;
@@ -15,6 +16,7 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -128,6 +130,30 @@ public class InjuryResource {
         log.debug("REST request to delete Injury : {}", id);
         injuryService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("injury", id.toString())).build();
+    }
+
+    /**
+     * POST  /injuries/lovetap/:location : Create a minor injury at a specific location
+     *
+     * @param location the location of the injury
+     * @return the ResponseEntity with status 201 (Created) and with body the new injury, or with status 400 (Bad Request) if the injury has already an ID
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PostMapping("/injuries/lovetap/{location}")
+    @Timed
+    public ResponseEntity<Injury> createSimpleInjury(@PathVariable String location) throws URISyntaxException {
+        log.debug("REST request to inflict random injury to location : {}", location);
+        Injury injury= new Injury();
+        injury.setInflicted(LocalDate.now());
+        injury.setClassification(Classification.laceration);
+        injury.setFatal(false);
+        injury.setLocation(location);
+        injury.setSeverity(1);
+        injury.setSource("Team Building Excercises");
+        Injury result = injuryService.save(injury);
+        return ResponseEntity.created(new URI("/api/injuries/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert("injury", result.getId().toString()))
+            .body(result);
     }
 
 }
