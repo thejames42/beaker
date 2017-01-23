@@ -113,7 +113,7 @@ public class InjuryResource {
      */
     @GetMapping("/injuries/location/{location}/severity/{severity}")
     @Timed
-    public List<Injury> getInjuriesByLocationAndSeverity(@PathVariable String location, @PathVariable String severity) {
+    public List<Injury> getInjuriesByLocationAndSeverity(@PathVariable String location, @PathVariable Integer severity) {
         log.debug("REST request to get Injuries by location and severity : {}", location, severity);
         return injuryService.findByLocationAndSeverity(location, severity);
     }

@@ -61,30 +61,26 @@ public class InjuryServiceImpl implements InjuryService {
     /**
      * Get all the injuries for location and severity.
      *
-     * @param
      * @return the list of entities
      */
-    public List<Injury> findByLocationAndSeverity(String location, String severity) {
+    public List<Injury> findByLocationAndSeverity(String location, Integer severity) {
         log.debug("Request to get all Injuries by location and severity");
         List<Injury> result = injuryRepository.findAll();
-        List<Injury> newResult = result.stream()
-            .filter(injury -> (injury.getLocation().equalsIgnoreCase(location) && (String.valueOf(injury.getSeverity()).equalsIgnoreCase(severity))))
+        return result.stream()
+            .filter(injury -> (injury.getLocation().equalsIgnoreCase(location) && (String.valueOf(injury.getSeverity()).equalsIgnoreCase(String.valueOf(severity)))))
             .collect(Collectors.toList());
-        return newResult;
     }
     /**
-     * Get all the injuries for location and severity.
+     * Get all the injuries for location and source.
      *
-     * @param
      * @return the list of entities
      */
     public List<Injury> findByLocationAndSource(String location, String source) {
         log.debug("Request to get all Injuries by location and source");
         List<Injury> result = injuryRepository.findAll();
-        List<Injury> newResult = result.stream()
+        return result.stream()
             .filter(injury -> (injury.getLocation().equalsIgnoreCase(location) && (String.valueOf(injury.getSource()).equalsIgnoreCase(source))))
             .collect(Collectors.toList());
-        return newResult;
     }
 
 

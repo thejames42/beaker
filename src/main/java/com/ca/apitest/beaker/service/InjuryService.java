@@ -32,7 +32,7 @@ public interface InjuryService {
      */
     Injury findOne(String id);
 
-    List<Injury> findByLocationAndSeverity(String location, String severity);
+    List<Injury> findByLocationAndSeverity(String location, Integer severity);
 
     List<Injury> findByLocationAndSource(String location, String source);
 
