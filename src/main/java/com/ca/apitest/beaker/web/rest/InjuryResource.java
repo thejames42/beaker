@@ -17,6 +17,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -167,6 +168,40 @@ public class InjuryResource {
         Injury result = injuryService.save(injury);
         return ResponseEntity.created(new URI("/api/injuries/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("injury", result.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * POST  /injuries/lovetaps/:howMany : Create a set of Injuries to location howMany!"
+     *
+     * @param howMany the number of the lovetaps to inflict
+     * @return the ResponseEntity with status 201 (Created) and with body the new injury, or with status 400 (Bad Request) if the injury has already an ID
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PostMapping("/injuries/lovetaps/{howMany}")
+    @Timed
+    public ResponseEntity<List<Injury>> createSimpleInjuryWithInteger(@PathVariable Integer howMany) throws URISyntaxException {
+        log.debug("REST request to inflict random injuries : {}", howMany);
+        List<Injury> result = new ArrayList<>();
+        StringBuilder idList = new StringBuilder();
+        if (howMany > 3)
+            howMany = 3;
+        for (int i = 0; i < howMany; i++) {
+            Injury injury = new Injury();
+            injury.setInflicted(LocalDate.now());
+            injury.setClassification(Classification.laceration);
+            injury.setFatal(false);
+            injury.setLocation("location" + i);
+            injury.setSeverity(1);
+            injury.setSource("Gratuitous flirtations");
+            Injury saved = injuryService.save(injury);
+            if (i != 0)
+                idList.append(",");
+            idList.append(saved.getId());
+            result.add(saved);
+        }
+        return ResponseEntity.created(new URI("/api/injuries/" + idList.toString()))
+            .headers(HeaderUtil.createEntityCreationAlert("injury", idList.toString()))
             .body(result);
     }
 
